@@ -8,7 +8,7 @@ def module():
 
 
 class G_Ranzal(Adv):
-    comment = "3FS & first S1 with 1 bar"
+    comment = "3FS & first S1 with 1 bar & S2 with >=30% gauge"
 
     conf = {}
     conf['slots.a'] = VC() + First_Rate_Hospitality()
@@ -151,12 +151,11 @@ if __name__ == '__main__':
     #     """
 
     conf['acl'] = """
-        # from core.timeline import now
-        `s1, this.gauges['x'] >=1000 and now()<10
+        `s1, this.gauges['x'] >=1000 and this.now()<10
         `s1, this.gauges['x'] >=1000 and this.gauges['fs'] >= 1000
-        `s2, fsc
+        `s2, fsc and this.gauges['fs'] >= 300
         `fs, cancel and seq=3 
-        `s3, fsc
+        `s3, fsc and 1
         """
 
     adv_test.test(module(), conf, verbose=0, mass=0)
